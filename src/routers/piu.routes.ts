@@ -1,44 +1,33 @@
 import { request, response, Router } from "express";
-import routes from ".";
+import userRoutes from ".";
 
 const piuRouter = Router();
 
-interface Piu {
-  idUser: 0;
-  nameUser: string;
-  emailUser: string;
-  conteudo: string;
-  qtLikes: 0;
-  piuDate: 0;
-}
-
-const pius = [] as Piu[];
+const piu = [] as Pius[];
 
 piuRouter.post("/", (request, response) => {
-  const {idUser, nameUser, emailUser, conteudo, qtLikes, piuDate } = request.body;
+  const { id, iduser, txt } = request.body;
 
-  const users = nameUser.find((nameUser: any) => users.id === idUser);
-  if (!nameUser) {
-    return response.status(404).json({ message: "USUÁRIO INEXSITENTE ID" });
+  const user = users.find((user: { id: any }) => user.id === iduser);
+  if (!user) {
+    return response.status(404).json({ message: "ID INEXISTENTE!" });
   }
 
-  const piu = new pius (idUser, txt, new Date(), new Date());
-  if (piu.txt == null){
-      return response.status(400).json({message: "Digite um texto para o Piu!"});
+  const piu = new Pius(iduser, txt, new Date(), new Date());
+  if (piu.txt == null) {
+    return response
+      .status(400)
+      .json({ message: "O PIU DEVE ER UM TEXTO, DIGITE!" });
   }
-  // const piu = {
-  //     nameUser,
-  //     emailUser,
-  //     conteudo,
-  //     qtLikes,
-  //     piuDate,
-  // } as Piu;
 
-  // pius.push(piu);
+  if (piu.txt.length > 140) {
+    return response
+      .status(400)
+      .json({
+        message: "LIMITE DE TEXTO EXCEDIDO! O piu deve ter 140 caracteres.",
+      });
+  }
 
-  // return response.json(piu);
-});
-
-routes.get("/pius", (request, response) => {
-  return response.json(pius);
+  piu.push(piu);
+  return response.json(piu);
 });
