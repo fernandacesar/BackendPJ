@@ -13,7 +13,7 @@ piuRouter.post("/", (request, response) => {
     return response.status(404).json({ message: "ID INEXISTENTE!" });
   }
 
-  const piu = new Pius(iduser, txt, new Date(), new Date());
+  const piu = new pius(iduser, txt, new Date(), new Date());
   if (piu.txt == null) {
     return response
       .status(400)
